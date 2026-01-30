@@ -5,7 +5,7 @@
 
 
 #define TERRENO_ANCHO 65
-#define TERRENO_ALTO 37*4
+#define TERRENO_ALTO 37
 #define ALTO_LOSA 32
 #define ANCHO_LOSA 32
 
