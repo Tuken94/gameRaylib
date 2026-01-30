@@ -1,0 +1,63 @@
+# depslib dependency file v1.0
+1769171532 source:c:\users\gus\documents\programacion 25-26\unidad_12_13\rogue_v0\main.c
+	"raylib.h"
+	"prota.h"
+	"escenario.h"
+	<time.h>
+
+1769163593 source:c:\users\gus\documents\programacion 25-26\unidad_12_13\rogue_v0\prota.c
+	"prota.h"
+	"raymath.h"
+
+1769002441 c:\users\gus\documents\programacion 25-26\unidad_12_13\rogue_v0\prota.h
+	"raylib.h"
+
+1769172288 source:c:\users\gus\documents\programacion 25-26\unidad_12_13\rogue_v0\escenario.c
+	"escenario.h"
+
+1769172288 c:\users\gus\documents\programacion 25-26\unidad_12_13\rogue_v0\escenario.h
+	"raylib.h"
+
+1769521087 source:c:\users\gus\documents\programacion 25-26\unidad_12_13\roguedeclase\escenario.c
+	"escenario.h"
+
+1769521121 c:\users\gus\documents\programacion 25-26\unidad_12_13\roguedeclase\escenario.h
+	"raylib.h"
+
+1769521952 source:c:\users\gus\documents\programacion 25-26\unidad_12_13\roguedeclase\main.c
+	"raylib.h"
+	"prota.h"
+	"escenario.h"
+	<time.h>
+	<stdio.h>
+
+1769518460 c:\users\gus\documents\programacion 25-26\unidad_12_13\roguedeclase\prota.h
+	"raylib.h"
+
+1769519150 source:c:\users\gus\documents\programacion 25-26\unidad_12_13\roguedeclase\prota.c
+	"prota.h"
+	"raymath.h"
+
+1769767985 source:c:\users\jaime\onedrive\documentos\escola\programación\roguedeclase\escenario.c
+	"escenario.h"
+	<stdio.h>
+	<stdbool.h>
+
+1769606838 c:\users\jaime\onedrive\documentos\escola\programación\roguedeclase\escenario.h
+	"raylib.h"
+
+1769672489 source:c:\users\jaime\onedrive\documentos\escola\programación\roguedeclase\main.c
+	"raylib.h"
+	"prota.h"
+	"escenario.h"
+	<time.h>
+	<stdio.h>
+
+1769768006 c:\users\jaime\onedrive\documentos\escola\programación\roguedeclase\prota.h
+	"raylib.h"
+	"escenario.h"
+
+1769768528 source:c:\users\jaime\onedrive\documentos\escola\programación\roguedeclase\prota.c
+	"prota.h"
+	"raymath.h"
+
