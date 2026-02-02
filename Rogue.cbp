@@ -124,6 +124,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="enemigo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="enemigo.h" />
 		<Unit filename="escenario.c">
 			<Option compilerVar="CC" />
 		</Unit>
