@@ -2,6 +2,7 @@
 #include "prota.h"
 #include "enemigo.h"
 #include "escenario.h"
+#include "Menu_incio.h"
 #include <time.h>
 #include <stdio.h>
 
@@ -9,14 +10,17 @@ int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    int screenWidth = 1600;
-    int screenHeight = 900;
+    int screenWidth = ANCHO_PANTALLA;
+    int screenHeight = ALTO_PANTALLA;
     InitWindow(screenWidth, screenHeight, "Rogue");
-    SetTargetFPS(0);
+    GameScreen currentScreen = LOGO;
+    SetTargetFPS(60);
     char texto_fps[20];
     char texto_posicion[30];
     char texto_celda[30];
     int fps_real;
+    int framesCounter = 0;
+    Texture2D logo = LoadTexture("textures/logo.png");
     //--------------------------------------------------------------------------------------
 
     SetRandomSeed(time(NULL));
@@ -39,6 +43,10 @@ int main()
     printf("\nRANGO_HORIZONTAL=%d",RANGO_HORIZONTAL);
     printf("\nRANGO_VERTICAL=%d",RANGO_VERTICAL);
 
+    Vector2 pos_logo;
+    pos_logo.x = screenWidth/2  - (logo.width  * 0.5)/2;
+    pos_logo.y = screenHeight/2 - (logo.height * 0.5)/2-200;
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -46,33 +54,92 @@ int main()
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
-        delta=GetFrameTime();
-        fps_real=GetFPS();
-        sprintf(texto_fps,"fps: %d",fps_real);
+        switch (currentScreen){
+            case LOGO:
+            {
+                // TODO: Update LOGO screen variables here!
+                framesCounter++;    // Count frames
+                // Wait for 2 seconds (120 frames) before jumping to TITLE screen
+                if (framesCounter > 120)
+                {
+                    currentScreen = TITLE;
+                }
+            } break;
+            case TITLE:
+            {
+                // TODO: Update TITLE screen variables here!
+                // Press enter to change to GAMEPLAY screen
+                if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+                {
+                    currentScreen = GAMEPLAY;
+                }
+            } break;
+            case GAMEPLAY:
+            {
+                // TODO: Update GAMEPLAY screen variables here!
+                // Press enter to change to ENDING screen
+                delta=GetFrameTime();
+                fps_real=GetFPS();
+                sprintf(texto_fps,"fps: %d",fps_real);
+                ProtaActualizar(&prota,delta);
+                EnemigoActualizar(&e,delta);
+                sprintf(texto_posicion,"posicion: (%d,%d)",(int)(prota.posicion.x),(int)(prota.posicion.y));
+                sprintf(texto_celda,"celda: (%d,%d)",(int)(prota.losa.x),(int)(prota.losa.y));
 
-        ProtaActualizar(&prota,delta);
-        EnemigoActualizar(&e,delta);
-
-        sprintf(texto_posicion,"posicion: (%d,%d)",(int)(prota.posicion.x),(int)(prota.posicion.y));
-        sprintf(texto_celda,"celda: (%d,%d)",(int)(prota.losa.x),(int)(prota.losa.y));
-
-        camara.target=prota.posicion;
-        //camara.zoom+=GetMouseWheelMove()*0.1f;
-
-
+                camara.target=prota.posicion;
+                //camara.zoom+=GetMouseWheelMove()*0.1f;
+            } break;
+            case ENDING:
+            {
+                // TODO: Update ENDING screen variables here!
+                // Press enter to return to TITLE screen
+                UnloadTexture(logo);
+                if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+                {
+                    currentScreen = TITLE;
+                }
+            } break;
+            default: break;
+        }
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
-        ClearBackground(BLACK);
-
-        BeginMode2D(camara);
-        EscenarioDibujar(prota.losa,RANGO_HORIZONTAL,RANGO_VERTICAL);
-        EnemigoDibujar(&e);
-        ProtaDibujar(&prota);
-        EndMode2D();
-        DrawText(texto_fps,10,50,30,YELLOW);
-        DrawText(texto_posicion,10,100,30,WHITE);
-        DrawText(texto_celda,10,150,30,ORANGE);
+        switch(currentScreen){
+        case LOGO:
+        {
+            // TODO: Draw LOGO screen here!
+            DrawTexture(logo,ANCHO_PANTALLA/2-logo.width/2,ALTO_PANTALLA/2-logo.height/2,WHITE);
+            DrawText("WAIT for 2 SECONDS...", 290, 150, 20, GRAY);
+        } break;
+        case TITLE:
+        {
+            // TODO: Draw TITLE screen here!
+            DrawRectangle(0, 0, screenWidth, screenHeight, BLACK);
+            DrawTextureEx(logo,pos_logo,0.0,0.5,WHITE);
+            DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", ANCHO_PANTALLA/3-20, ALTO_PANTALLA/2, 20, DARKGRAY);
+        } break;
+        case GAMEPLAY:
+        {
+            // TODO: Draw GAMEPLAY screen here!
+            ClearBackground(BLACK);
+            BeginMode2D(camara);
+            EscenarioDibujar(prota.losa,RANGO_HORIZONTAL,RANGO_VERTICAL);
+            EnemigoDibujar(&e);
+            ProtaDibujar(&prota);
+            EndMode2D();
+            DrawText(texto_fps,10,50,30,YELLOW);
+            DrawText(texto_posicion,10,100,30,WHITE);
+            DrawText(texto_celda,10,150,30,ORANGE);
+        } break;
+        case ENDING:
+        {
+            // TODO: Draw ENDING screen here!
+            DrawRectangle(0, 0, screenWidth, screenHeight, BLUE);
+            DrawText("ENDING SCREEN", 20, 20, 40, DARKBLUE);
+            DrawText("PRESS ENTER or TAP to RETURN to TITLE SCREEN", 120, 220, 20, DARKBLUE);
+        } break;
+        default: break;
+        }
         EndDrawing();
         //----------------------------------------------------------------------------------
     }

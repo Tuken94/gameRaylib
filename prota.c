@@ -3,8 +3,8 @@
 #include "escenario.h"
 
 const int VEL_INICIAL=200;
-const char* archivo_andando="walk.png";
-const char* archivo_parado="idle.png";
+const char* archivo_andando="textures/Sprites/Walk/walk.png";
+const char* archivo_parado="textures/Sprites/Idle/idle.png";
 Texture2D textura_andando;
 Texture2D textura_parado;
 Rectangle frames[6][8];
