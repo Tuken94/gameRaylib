@@ -25,6 +25,7 @@ int main()
 
     SetRandomSeed(time(NULL));
     Prota prota=ProtaCrear((Vector2){384,208});
+    Spawner spawner=SpawnEnemigo();
     Enemigo e=EnemigoCrear((Vector2){200,200});
     EscenarioIniciar();
     float delta;
@@ -60,8 +61,7 @@ int main()
                 // TODO: Update LOGO screen variables here!
                 framesCounter++;    // Count frames
                 // Wait for 2 seconds (120 frames) before jumping to TITLE screen
-                if (framesCounter > 120)
-                {
+                if (framesCounter > 120){
                     currentScreen = TITLE;
                 }
             } break;
@@ -69,8 +69,7 @@ int main()
             {
                 // TODO: Update TITLE screen variables here!
                 // Press enter to change to GAMEPLAY screen
-                if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
-                {
+                if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP)){
                     currentScreen = GAMEPLAY;
                 }
             } break;
@@ -82,7 +81,7 @@ int main()
                 fps_real=GetFPS();
                 sprintf(texto_fps,"fps: %d",fps_real);
                 ProtaActualizar(&prota,delta);
-                EnemigoActualizar(&e,delta);
+                SpawnActualizar(&spawner,delta,&prota);
                 sprintf(texto_posicion,"posicion: (%d,%d)",(int)(prota.posicion.x),(int)(prota.posicion.y));
                 sprintf(texto_celda,"celda: (%d,%d)",(int)(prota.losa.x),(int)(prota.losa.y));
 
@@ -116,7 +115,7 @@ int main()
             // TODO: Draw TITLE screen here!
             DrawRectangle(0, 0, screenWidth, screenHeight, BLACK);
             DrawTextureEx(logo,pos_logo,0.0,0.5,WHITE);
-            DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", ANCHO_PANTALLA/3-20, ALTO_PANTALLA/2, 20, DARKGRAY);
+            DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", ANCHO_PANTALLA/3-20, ALTO_PANTALLA/2, 20, GOLD);
         } break;
         case GAMEPLAY:
         {
@@ -124,6 +123,7 @@ int main()
             ClearBackground(BLACK);
             BeginMode2D(camara);
             EscenarioDibujar(prota.losa,RANGO_HORIZONTAL,RANGO_VERTICAL);
+            SpawnerDibujar(&spawn);
             EnemigoDibujar(&e);
             ProtaDibujar(&prota);
             EndMode2D();

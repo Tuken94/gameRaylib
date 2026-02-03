@@ -69,7 +69,7 @@
 1769777916 c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\escenario.h
 	"raylib.h"
 
-1770110521 source:c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\main.c
+1770122416 source:c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\main.c
 	"raylib.h"
 	"prota.h"
 	"enemigo.h"
@@ -81,17 +81,20 @@
 1769771757 c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\prota.h
 	"raylib.h"
 
-1769776617 c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\enemigo.h
+1770123558 c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\enemigo.h
 	"raylib.h"
+	"prota.h"
 
 1770109379 source:c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\prota.c
 	"prota.h"
 	"raymath.h"
 	"escenario.h"
 
-1770034901 source:c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\enemigo.c
+1770123939 source:c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\enemigo.c
 	"enemigo.h"
 	"raymath.h"
+	"escenario.h"
+	<stdio.h>
 
 1770109356 c:\users\jaime\onedrive\documentos\escola\programación\gameraylib\menu_incio.h
 	"raylib.h"
