@@ -8,22 +8,22 @@ const char* archivo_enemigo="textures/32rogues/rogues.png";
 Texture2D textura_enemigo;
 
 Spawner SpawnEnemigo(){
-    Spawner nuevo;
-    Vector2 pos_fake={-10000000,10000000}
+    Spawner sp;
+    Vector2 pos_fake={-10000000,10000000};
     sp.plazo=PLAZO_INICIAL_POOL;
     sp.tiempo=0.0f;
     sp.contador=0;
     for (int i = 0; i < CAPACIDAD_POOL; i++){
-        Enemigo nuevo=EnemigoCrear();
+        Enemigo nuevo=EnemigoCrear(pos_fake);
         sp.pool[i]=nuevo;
     }
     return sp;
 }
 
-void SpawnActualizar(Spawner* s,float delta,const prota* p){
+void SpawnActualizar(Spawner* s,float delta,const Prota* p){
     //activamos uno nuevo si se ha cumplido el plazo
     s->tiempo+=delta;
-    if(s->tiempo s-> plazo){
+    if(s->tiempo > s->plazo){
         EnemigoActivar(s);
         s->tiempo=0.0f;
     }
@@ -38,7 +38,7 @@ void SpawnActualizar(Spawner* s,float delta,const prota* p){
 void SpawnDibujar(const Spawner* s){
     for (int i = 0; i < CAPACIDAD_POOL; i++){
         Enemigo e=s->pool[i];
-        if(e.activo) EnemigoActualizar(&e);
+        if(e.activo) EnemigoDibujar(&e);
     }
 }
 
@@ -46,8 +46,9 @@ void EnemigoActivar(Spawner* s){
     //si ya estan todos activos no hago nada
     if(s->contador>=CAPACIDAD_POOL)return;
     //activo en primero que me encuentro inactivo y lo pongo en escalera aleatoria
+    Enemigo e;
     for (int i = 0; i < CAPACIDAD_POOL; i++){
-        Enemigo e=s->pool[i];
+        e=s->pool[i];
         if(!e.activo){
             e.activo=true;
             e.posicion=EscaleraAleatoria();
@@ -55,8 +56,8 @@ void EnemigoActivar(Spawner* s){
             break;
         }
     }
-    //vontabilizo el activo
-    s->contado++;
+    //contabilizo el activo
+    printf("\n... Activando enemigo %d en %d,%d",s->contador, e.posicion.x,e.posicion.y);
 }
 
 void EnemigoDesactivar(Spawner* s,Enemigo* e){
@@ -83,7 +84,7 @@ Enemigo EnemigoCrear(Vector2 pos_ini){
     return nuevo;
 }
 
-void EnemigoActualizar(Enemigo* pe,float delta,Prota* pp){
+void EnemigoActualizar(Enemigo* pe,float delta,const Prota* pp){
     //Si estamos a su alcance, se dirige a nosotros
     if(Vector2Distance(pe->posicion,pp->posicion)<ALCANCE_ENEMIGO){
         pe->dir=Vector2Subtract(pp->posicion,pe->posicion);
@@ -91,8 +92,8 @@ void EnemigoActualizar(Enemigo* pe,float delta,Prota* pp){
     }else{
         if(pe->estado!=PATRULLA){
             do{
-            pe->dir=(Vector2){GetRandomValue(-1,1),GetRandomValue(-1,1)};
-            }while( pe->dir.x==0 && pp->dir.y==0);
+                pe->dir=(Vector2){GetRandomValue(-1,1),GetRandomValue(-1,1)};
+            }while(pe->dir.x==0 && pp->dir.y==0);
             pe->estado=PATRULLA;
         }
     }

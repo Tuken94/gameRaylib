@@ -26,7 +26,6 @@ int main()
     SetRandomSeed(time(NULL));
     Prota prota=ProtaCrear((Vector2){384,208});
     Spawner spawner=SpawnEnemigo();
-    Enemigo e=EnemigoCrear((Vector2){200,200});
     EscenarioIniciar();
     float delta;
 
@@ -123,8 +122,7 @@ int main()
             ClearBackground(BLACK);
             BeginMode2D(camara);
             EscenarioDibujar(prota.losa,RANGO_HORIZONTAL,RANGO_VERTICAL);
-            SpawnerDibujar(&spawn);
-            EnemigoDibujar(&e);
+            SpawnDibujar(&spawner);
             ProtaDibujar(&prota);
             EndMode2D();
             DrawText(texto_fps,10,50,30,YELLOW);

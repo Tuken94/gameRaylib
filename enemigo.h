@@ -11,7 +11,7 @@
 #define ALCANCE_ENEMIGO 160
 #define PLAZO_INICIAL_POOL 3.0f
 
-typedef enum estadoEnemigo {PATRULLA=0, SIGUIENDO}estadoEnemigo;
+typedef enum {PATRULLA=0, SIGUIENDO}estadoEnemigo;
 
 typedef struct{
     Vector2 posicion;
@@ -20,7 +20,7 @@ typedef struct{
     int velocidad;
     Vector2 dir;
     estadoEnemigo estado;
-    bool activo
+    bool activo;
 }Enemigo;
 
 typedef struct{
@@ -32,15 +32,15 @@ typedef struct{
 
 Spawner SpawnEnemigo();
 
-void SpawnActualizar(Spawner*,float,const);
+void SpawnActualizar(Spawner*,float,const Prota*);
 
-void SpawnDibujar();
+void SpawnDibujar(const Spawner*);
 
-void EnemigoActivar(Spawner*)
+void EnemigoActivar(Spawner*);
 
 Enemigo EnemigoCrear(Vector2);//posicion inicial
 
-void EnemigoActualizar(Enemigo*,float,Prota*);//referencia, delta
+void EnemigoActualizar(Enemigo*,float,const Prota*);//referencia, delta
 
 void EnemigoDibujar(const Enemigo*);//referencia
 
