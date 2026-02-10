@@ -8,6 +8,8 @@
 #define PROTA_ALTO_HITBOX 26
 #define PROTA_X_HITBOX 18
 #define PROTA_Y_HITBOX 20
+#define PROTA_VIDA_MAX 100
+#define PROTA_ALTO_BARRA_VIDA 3
 
 typedef struct{
     Vector2 posicion;
@@ -17,6 +19,7 @@ typedef struct{
     int velocidad;
     Vector2 dir;
     Vector2 losa;
+    int vida;
 }Prota;
 
 Prota ProtaCrear(Vector2);//posicion inicial

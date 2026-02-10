@@ -3,6 +3,7 @@
 #include "enemigo.h"
 #include "escenario.h"
 #include "Menu_incio.h"
+#include "comida.h"
 #include <time.h>
 #include <stdio.h>
 
@@ -25,8 +26,9 @@ int main()
 
     SetRandomSeed(time(NULL));
     Prota prota=ProtaCrear((Vector2){384,208});
-    Spawner spawner=SpawnEnemigo();
     EscenarioIniciar();
+    Spawner spawner=SpawnEnemigo();
+    Comida comida=ComidaCrear();
     float delta;
 
     Camera2D camara={
@@ -81,19 +83,20 @@ int main()
                 sprintf(texto_fps,"fps: %d",fps_real);
                 ProtaActualizar(&prota,delta);
                 SpawnActualizar(&spawner,delta,&prota);
+                ComidaActualizar(&comida,&prota);
                 sprintf(texto_posicion,"posicion: (%d,%d)",(int)(prota.posicion.x),(int)(prota.posicion.y));
                 sprintf(texto_celda,"celda: (%d,%d)",(int)(prota.losa.x),(int)(prota.losa.y));
 
                 camara.target=prota.posicion;
                 //camara.zoom+=GetMouseWheelMove()*0.1f;
+                if(prota.vida <= 0) CloseWindow();
             } break;
             case ENDING:
             {
                 // TODO: Update ENDING screen variables here!
                 // Press enter to return to TITLE screen
                 UnloadTexture(logo);
-                if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
-                {
+                if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP)){
                     currentScreen = TITLE;
                 }
             } break;
@@ -123,6 +126,7 @@ int main()
             BeginMode2D(camara);
             EscenarioDibujar(prota.losa,RANGO_HORIZONTAL,RANGO_VERTICAL);
             SpawnDibujar(&spawner);
+            ComidaDibujar(&comida);
             ProtaDibujar(&prota);
             EndMode2D();
             DrawText(texto_fps,10,50,30,YELLOW);

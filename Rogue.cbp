@@ -125,6 +125,10 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Menu_incio.h" />
+		<Unit filename="comida.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="comida.h" />
 		<Unit filename="enemigo.c">
 			<Option compilerVar="CC" />
 		</Unit>

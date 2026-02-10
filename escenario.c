@@ -1,4 +1,5 @@
 #include "escenario.h"
+#include "comida.h"
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -130,16 +131,16 @@ bool UbicacionLibre(Rectangle r){
     //Si la esquina sup-izda del prota coincide con losa -> no se puede
     int destinoX=(int)(r.x/ANCHO_LOSA);
     int destinoY=(int)(r.y/ALTO_LOSA);
-    if(TERRENO[destinoY][destinoX]!=3) return false;
+    if(TERRENO[destinoY][destinoX]<3) return false;
     //Si la esquina sup-derecha del prota coincide con losa -> no se puede
     destinoX=(int)((r.x+r.width)/ANCHO_LOSA);
-    if(TERRENO[destinoY][destinoX]!=3) return false;
+    if(TERRENO[destinoY][destinoX]<3) return false;
     //Si la esquina inf-derecha del prota coincide con losa -> no se puede
     destinoY=(int)((r.y+r.height)/ALTO_LOSA);
-    if(TERRENO[destinoY][destinoX]!=3) return false;
+    if(TERRENO[destinoY][destinoX]<3) return false;
     //Si la esquina inf-izq del prota coincide con losa -> no se puede
     destinoX=(int)(r.x/ANCHO_LOSA);
-    if(TERRENO[destinoY][destinoX]!=3) return false;
+    if(TERRENO[destinoY][destinoX]<3) return false;
 
     return true;
 }
@@ -149,8 +150,13 @@ Vector2 EscaleraAleatoria(){
     return escaleras[GetRandomValue(0,numEscaleras-1)];
 }
 
-
-
-
-
-
+//Devuelve una posición de suelo libre donde colocar una comida
+Vector2 PosicionLibreAleatoria(){
+    int x,y;
+    do{
+        x=GetRandomValue(0,TERRENO_ANCHO-1);
+        y=GetRandomValue(0,TERRENO_ALTO-1);
+    }while(TERRENO[y][x]!=3);
+    Vector2 posicion={x*ANCHO_LOSA, y*ALTO_LOSA};//Para devolver pixels en lugar de losas
+    return posicion;
+}

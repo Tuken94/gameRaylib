@@ -29,35 +29,36 @@ void SpawnActualizar(Spawner* s,float delta,const Prota* p){
     }
     //actualizamos solo los activos
     for (int i = 0; i < CAPACIDAD_POOL; i++){
-        Enemigo e=s->pool[i];
-        if(e.activo) EnemigoActualizar(&e,delta,p);
+        // Accedemos directamente a la direcci¢n de memoria del enemigo en el array
+        if(s->pool[i].activo) EnemigoActualizar(&(s->pool[i]), delta, p);
     }
 
 }
 
 void SpawnDibujar(const Spawner* s){
     for (int i = 0; i < CAPACIDAD_POOL; i++){
-        Enemigo e=s->pool[i];
-        if(e.activo) EnemigoDibujar(&e);
+        if(s->pool[i].activo) EnemigoDibujar(&(s->pool[i]));
     }
 }
 
 void EnemigoActivar(Spawner* s){
     //si ya estan todos activos no hago nada
-    if(s->contador>=CAPACIDAD_POOL)return;
-    //activo en primero que me encuentro inactivo y lo pongo en escalera aleatoria
-    Enemigo e;
     for (int i = 0; i < CAPACIDAD_POOL; i++){
-        e=s->pool[i];
-        if(!e.activo){
-            e.activo=true;
-            e.posicion=EscaleraAleatoria();
+        if(!s->pool[i].activo){
+            s->pool[i].activo = true; // Modificamos el original
+            s->pool[i].posicion = EscaleraAleatoria();
+
+            // Si EscaleraAleatoria devuelve coordenadas de rejilla (0,1,2...), multipl¡calas:
+            // s->pool[i].posicion.x *= ANCHO_LOSA;
+            // s->pool[i].posicion.y *= ALTO_LOSA;
+
             s->contador++;
+            // Usamos printf con el dato real para debug
+            printf("\n... Activando enemigo %d en %.0f,%.0f", s->contador, s->pool[i].posicion.x, s->pool[i].posicion.y);
             break;
         }
     }
     //contabilizo el activo
-    printf("\n... Activando enemigo %d en %d,%d",s->contador, e.posicion.x,e.posicion.y);
 }
 
 void EnemigoDesactivar(Spawner* s,Enemigo* e){
@@ -74,7 +75,8 @@ Enemigo EnemigoCrear(Vector2 pos_ini){
         VEL_ENEMIGO,
         {0,0},
         PATRULLA,
-        false
+        false,
+        20
     };
     while(nuevo.dir.x==0 && nuevo.dir.y==0){
         nuevo.dir=(Vector2){GetRandomValue(-1,1),GetRandomValue(-1,1)};

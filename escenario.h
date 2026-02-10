@@ -13,5 +13,6 @@ void EscenarioIniciar();
 void EscenarioDibujar(Vector2,int,int);
 bool UbicacionLibre(Rectangle);
 Vector2 EscaleraAleatoria();
+Vector2 PosicionLibreAleatoria();
 
 #endif // ESCENARIO_H_INCLUDED

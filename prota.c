@@ -36,7 +36,9 @@ Prota ProtaCrear(Vector2 pos_ini){
         (Rectangle){0,0,48,64},
         (Rectangle){pos_ini.x+PROTA_X_HITBOX,pos_ini.y+PROTA_Y_HITBOX,PROTA_ANCHO_HITBOX,PROTA_ALTO_HITBOX},
         VEL_INICIAL,
-        (Vector2){0,0}
+        (Vector2){0,0}, // Direcci¢n inicial
+        (Vector2){0,0}, // Losa inicial
+        PROTA_VIDA_MAX  // <--- IMPORTANTE: Inicializar la vida
     };
     return nuevo;
 }
@@ -97,9 +99,24 @@ void ProtaActualizar(Prota* pp, float delta){
 }
 
 void ProtaDibujar(const Prota* pp){
-    if (pp->dir.x==0 & pp->dir.y==0){
+    if (pp->dir.x==0 && pp->dir.y==0){
         DrawTextureRec(textura_parado,pp->region,pp->posicion,WHITE);
     }else{
         DrawTextureRec(textura_andando,pp->region,pp->posicion,WHITE);
     }
+    //barra de vida
+    DrawRectangle(
+        pp->posicion.x+12,
+        pp->posicion.y+4*PROTA_ALTO_BARRA_VIDA,
+        PROTA_VIDA_MAX*0.25f,
+        PROTA_ALTO_BARRA_VIDA,
+        WHITE
+    );
+    DrawRectangle(
+        pp->posicion.x+12,
+        pp->posicion.y+4*PROTA_ALTO_BARRA_VIDA,
+        pp->vida*0.25f,
+        PROTA_ALTO_BARRA_VIDA,
+        GREEN
+    );
 }
