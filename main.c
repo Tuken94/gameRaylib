@@ -25,8 +25,8 @@ int main()
     //--------------------------------------------------------------------------------------
 
     SetRandomSeed(time(NULL));
-    Prota prota=ProtaCrear((Vector2){384,208});
     EscenarioIniciar();
+    Prota prota=ProtaCrear((Vector2){384,208});
     Spawner spawner=SpawnEnemigo();
     Comida comida=ComidaCrear();
     float delta;

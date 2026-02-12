@@ -17,10 +17,12 @@ typedef struct{
     Vector2 posicion;
     Texture2D textura;
     Rectangle region;
+    Rectangle hitbox;
     int velocidad;
     Vector2 dir;
     estadoEnemigo estado;
     bool activo;
+    int danio;
 }Enemigo;
 
 typedef struct{
@@ -32,7 +34,7 @@ typedef struct{
 
 Spawner SpawnEnemigo();
 
-void SpawnActualizar(Spawner*,float,const Prota*);
+void SpawnActualizar(Spawner*,float,Prota*);
 
 void SpawnDibujar(const Spawner*);
 
@@ -40,7 +42,7 @@ void EnemigoActivar(Spawner*);
 
 Enemigo EnemigoCrear(Vector2);//posicion inicial
 
-void EnemigoActualizar(Enemigo*,float,const Prota*);//referencia, delta
+void EnemigoActualizar(Enemigo*,float,Prota*,Spawner*);//referencia, delta
 
 void EnemigoDibujar(const Enemigo*);//referencia
 
